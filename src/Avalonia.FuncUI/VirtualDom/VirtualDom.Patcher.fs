@@ -210,8 +210,11 @@ module internal rec Patcher =
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
 
     let create (viewElement: ViewDelta) : IControl =
-        let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>
-
+        let control = 
+            match viewElement.props with
+            | null -> viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>
+            | _ as props -> Activator.CreateInstance(viewElement.viewType, [| props |]) |> Utils.cast<IControl>
+        
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
         Patcher.patch (control, viewElement)
         control

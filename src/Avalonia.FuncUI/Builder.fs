@@ -220,5 +220,14 @@ type ViewBuilder() =
         {
             View.viewType = typeof<'view>
             View.attrs = attrs
+            View.props = null
+        }
+        :> IView<'view>
+
+    static member Create<'view>(attrs: IAttr<'view> list, props: obj) : IView<'view> =
+        {
+            View.viewType = typeof<'view>
+            View.attrs = attrs
+            View.props = props
         }
         :> IView<'view>

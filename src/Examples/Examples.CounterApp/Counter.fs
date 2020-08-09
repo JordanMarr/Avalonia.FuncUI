@@ -1,6 +1,7 @@
 namespace Examples.CounterApp
 
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Builder
 
 module Counter =
     open Avalonia.Controls
@@ -22,7 +23,7 @@ module Counter =
         | SetCount count  -> { state with count = count } 
         | Reset -> init
     
-    let view (state: State) (dispatch) =
+    let view (state: State) (dispatch) =        
         DockPanel.create [
             DockPanel.children [
                 Button.create [
@@ -61,5 +62,8 @@ module Counter =
                     TextBlock.horizontalAlignment HorizontalAlignment.Center
                     TextBlock.text (string state.count)
                 ]
+
+                if state.count > 3 
+                then ViewBuilder.Create<About.Host>([], { About.Props.Message = sprintf "Counter: %i" state.count })
             ]
-        ]       
+        ]

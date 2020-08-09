@@ -144,6 +144,7 @@ module internal rec Differ =
             {
                 ViewDelta.viewType = next.ViewType
                 ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
+                ViewDelta.props = null
             }
         else
             ViewDelta.From next

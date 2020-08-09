@@ -106,10 +106,12 @@ module internal rec Delta =
         {
             viewType: Type
             attrs: AttrDelta list
+            props: obj
         }
         with
             static member From (view: IView) : ViewDelta =
                 {
                     viewType = view.ViewType
                     attrs = view.Attrs |> List.map AttrDelta.From
+                    props = view.Props
                 }

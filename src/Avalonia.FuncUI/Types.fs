@@ -133,6 +133,7 @@ module Types =
     type IView =
         abstract member ViewType: Type with get
         abstract member Attrs: IAttr list with get
+        abstract member Props: obj
         
     type IView<'viewType> =
         inherit IView
@@ -142,12 +143,14 @@ module Types =
         {
             viewType: Type
             attrs: IAttr<'viewType> list
+            props: obj
         }
         
         interface IView with
             member this.ViewType =  this.viewType
             member this.Attrs =
                 this.attrs |> List.map (fun attr -> attr :> IAttr)
+            member this.Props = box this.props
             
         interface IView<'viewType> with
             member this.Attrs = this.attrs
